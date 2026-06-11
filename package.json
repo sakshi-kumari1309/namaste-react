@@ -1,0 +1,33 @@
+{
+  "name": "namaste-react",
+  "version": "1.0.0",
+  "description": "This is a React Project by Sakshi-Kumari",
+  "main": "App.js",
+  "targets": {
+    "main": false
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sakshi-kumari1309/namaste-react.git"
+  },
+  "keywords": [
+    "react",
+    "sakshi"
+  ],
+  "author": "Sakshi Kumari",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sakshi-kumari1309/namaste-react/issues"
+  },
+  "homepage": "https://github.com/sakshi-kumari1309/namaste-react#readme",
+  "devDependencies": {
+    "parcel": "^2.16.4"
+  },
+  "dependencies": {
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  }
+}
