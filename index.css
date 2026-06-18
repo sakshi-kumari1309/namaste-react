@@ -176,3 +176,102 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #666;
 }
+
+/* =========================
+   SHIMMER / SKELETON PLACEHOLDERS
+========================= */
+.shimmer-container {
+  max-width: 1400px;
+  margin: 24px auto;
+  padding: 0 16px;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.shimmer-card {
+  position: relative;
+  overflow: hidden;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.012),
+    rgba(255, 255, 255, 0.02)
+  );
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+
+  /* set an appropriate placeholder height similar to restaurant cards */
+  min-height: 360px;
+
+  /* subtle base fill for skeleton shapes */
+  --skeleton: rgba(255, 255, 255, 0.03);
+}
+
+/* top image block */
+.shimmer-card::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 200px;
+  background: var(--skeleton);
+}
+
+/* content area: structure rendered inside the card */
+.shimmer-card .shimmer-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.shimmer-line {
+  height: 12px;
+  background: var(--skeleton);
+  border-radius: 8px;
+}
+
+.shimmer-line.lg {
+  width: 70%;
+}
+
+.shimmer-line.md {
+  width: 90%;
+}
+
+.shimmer-line.sm {
+  width: 40%;
+}
+
+/* animated sheen overlay */
+.shimmer-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.08),
+    transparent
+  );
+  transform: skewX(-20deg);
+  animation: shimmer 1.1s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(300%) skewX(-20deg);
+  }
+}
+
+/* small responsive tweak to keep placeholders balanced on phone */
+@media (max-width: 420px) {
+  .shimmer-card {
+    min-height: 320px;
+  }
+}

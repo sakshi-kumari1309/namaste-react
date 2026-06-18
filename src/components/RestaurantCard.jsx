@@ -2,13 +2,14 @@ import restaurantImages from "../utils/images";
 
 const RestaurantCard = ({ resData }) => {
   const {
+    id,
     cloudinaryImageId,
     name,
     cuisines,
     avgRating,
     costForTwo,
     deliveryTime,
-  } = resData.data;
+  } = resData.info;
 
   return (
     <div className="res-card">
@@ -16,7 +17,7 @@ const RestaurantCard = ({ resData }) => {
         className="res-logo"
         alt={name}
         src={
-          restaurantImages[name] ||
+          restaurantImages[id] ||
           "https://images.unsplash.com/photo-1504674900247-0877df9cc836"
         }
       />
