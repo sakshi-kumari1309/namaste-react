@@ -1,169 +1,178 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-  }
-  
-  body {
-    background-color: #121212;
-    color: white;
-  }
-  
-  /* HEADER */
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 40px;
-    background-color: #1e1e1e;
-    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.5);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  
-  .logo {
-    width: 80px;
-  }
-  
-  .nav-items ul {
-    display: flex;
-    list-style: none;
-    gap: 35px;
-  }
-  
-  .nav-items li {
-    font-size: 18px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .nav-items li:hover {
-    color: #ff6b35;
-  }
-  
-  /* SEARCH */
-  
-  .search {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 30px;
-  }
-  
-  .search-input {
-    width: 450px;
-    padding: 14px;
-    border: 1px solid #333;
-    border-radius: 12px;
-    background-color: #1e1e1e;
-    color: white;
-    font-size: 16px;
-  }
-  
-  .search-input::placeholder {
-    color: #888;
-  }
-  
-  .search-input:focus {
-    outline: none;
-    border-color: #ff6b35;
-  }
-  
-  .search-btn {
-    padding: 14px 25px;
-    border: none;
-    border-radius: 12px;
-    background: #ff6b35;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .search-btn:hover {
-    background: #ff824d;
-  }
-  
-  /* HEADING */
-  
-  .section-title {
-    padding-left: 40px;
-    margin-bottom: 20px;
-    font-size: 28px;
-    font-weight: 700;
-  }
-  
-  /* RESTAURANTS */
-  
-  .res-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 25px;
-    padding: 20px 40px;
-  }
-  
-  .res-card {
-    background-color: #1e1e1e;
-    border-radius: 18px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    border: 1px solid #2d2d2d;
-  }
-  
-  .res-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0px 12px 25px rgba(255, 107, 53, 0.2);
-  }
-  
-  .res-logo {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-  }
-  
-  .res-card h3 {
-    padding: 15px 15px 8px;
-    font-size: 20px;
-    color: white;
-  }
-  
-  .res-card h4 {
-    padding: 4px 15px;
-    color: #bdbdbd;
-    font-size: 14px;
-    font-weight: 500;
-  }
-  
-  .res-card h4:last-child {
-    padding-bottom: 18px;
-  }
-  
-  /* RATING */
-  
-  .rating {
-    color: #4caf50 !important;
-    font-weight: 700 !important;
-  }
-  
-  /* SCROLLBAR */
-  
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  ::-webkit-scrollbar-track {
-    background: #121212;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: #444;
-    border-radius: 10px;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: #666;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #121212;
+  color: white;
+}
+
+/* HEADER */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background-color: #1e1e1e;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.5);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  width: 80px;
+}
+
+.nav-items ul {
+  display: flex;
+  list-style: none;
+  gap: 35px;
+}
+
+.nav-items li {
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.nav-items li:hover {
+  color: #ff6b35;
+}
+
+/* SEARCH */
+
+.filter-search-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px 40px;
+}
+
+.filter-btn {
+  padding: 14px 20px;
+  border: none;
+  border-radius: 12px;
+  background: #282828;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+  background: #ff6b35;
+}
+
+.search {
+  display: flex;
+  gap: 10px;
+}
+
+.search-input {
+  width: 350px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #333;
+  background: #1e1e1e;
+  color: white;
+}
+
+.search-btn {
+  padding: 14px 20px;
+  border: none;
+  border-radius: 12px;
+  background: #ff6b35;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.search-btn:hover {
+  background: #ff824d;
+}
+
+/* HEADING */
+
+.section-title {
+  padding-left: 40px;
+  margin-bottom: 20px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+/* RESTAURANTS */
+
+.res-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  padding: 20px 40px;
+}
+
+.res-card {
+  background-color: #1e1e1e;
+  border-radius: 18px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid #2d2d2d;
+}
+
+.res-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0px 12px 25px rgba(255, 107, 53, 0.2);
+}
+
+.res-logo {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.res-card h3 {
+  padding: 15px 15px 8px;
+  font-size: 20px;
+  color: white;
+}
+
+.res-card h4 {
+  padding: 4px 15px;
+  color: #bdbdbd;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.res-card h4:last-child {
+  padding-bottom: 18px;
+}
+
+/* RATING */
+
+.rating {
+  color: #4caf50 !important;
+  font-weight: 700 !important;
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #121212;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
