@@ -275,3 +275,18 @@ body {
     min-height: 320px;
   }
 }
+
+.login-btn {
+  border: none;
+  padding: 10px 16px;
+
+  border-radius: var(--radius-md);
+
+  background: var(--primary);
+  color: #111;
+
+  font-weight: 700;
+  cursor: pointer;
+
+  transition: var(--transition);
+}

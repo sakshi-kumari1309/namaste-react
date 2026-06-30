@@ -4,31 +4,36 @@ import Shimmer from "./Shimmer.jsx";
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const [searchText, setSearchText] = useState("");
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
 
   //* milliseconds to keep the shimmer visible
   const SIMULATED_DELAY_MS = 1500;
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+
   const fetchData = async () => {
     const response = await fetch(
-      "https://namastedev.com/api/v1/listRestaurants",
+      "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.97530&lng=77.59100&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING",
     );
 
     const json = await response.json();
 
     const restaurants =
-      json?.data?.data?.cards?.[1]?.card?.card?.gridElements?.infoWithStyle
+      json?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants || [];
 
     //* artificial delay so shimmer is visible during development
     await new Promise((res) => setTimeout(res, SIMULATED_DELAY_MS));
 
     setListOfRestaurants(restaurants);
+    setFilteredRestaurants(restaurants);
   };
 
-  return listOfRestaurants.length === 0 ? (
+  return filteredRestaurants.length === 0 ? (
     <Shimmer />
   ) : (
     <div className="body">
@@ -39,7 +44,7 @@ const Body = () => {
             const filteredList = listOfRestaurants.filter(
               (item) => item.info.avgRating > 4,
             );
-            setListOfRestaurants(filteredList);
+            setFilteredRestaurants(filteredList);
           }}
         >
           ⭐ Top Rated Restaurants
@@ -50,9 +55,21 @@ const Body = () => {
             type="text"
             placeholder="Search Restaurants..."
             className="search-input"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
           />
-
-          <button className="search-btn">Search</button>
+          <button
+            onClick={() => {
+              //* filter the list of restaurants based on the search text
+              console.log(searchText);
+              const filteredList = listOfRestaurants.filter((res) =>
+                res.info.name.toLowerCase().includes(searchText.toLowerCase()),
+              );
+              setFilteredRestaurants(filteredList);
+            }}
+          >
+            Search
+          </button>
         </div>
       </div>
 
@@ -66,9 +83,15 @@ const Body = () => {
       </h2>
 
       <div className="res-container">
-        {listOfRestaurants.map((restaurant) => (
-          <RestaurantCard key={restaurant?.info?.id} resData={restaurant} />
-        ))}
+        {filteredRestaurants.length > 0
+          ? filteredRestaurants.map((restaurant) => (
+              // key must be unique — using the API's own id field
+              <RestaurantCard key={restaurant.info.id} resData={restaurant} />
+            ))
+          : listOfRestaurants.map((restaurant) => (
+              // key must be unique — using the API's own id field
+              <RestaurantCard key={restaurant.info.id} resData={restaurant} />
+            ))}
       </div>
     </div>
   );

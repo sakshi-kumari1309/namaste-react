@@ -1,6 +1,8 @@
 import restaurantImages from "../utils/images";
 
 const RestaurantCard = ({ resData }) => {
+  const CDN_URL = "https://media-assets.swiggy.com/swiggy/image/upload/";
+
   const {
     id,
     cloudinaryImageId,
@@ -13,14 +15,7 @@ const RestaurantCard = ({ resData }) => {
 
   return (
     <div className="res-card">
-      <img
-        className="res-logo"
-        alt={name}
-        src={
-          restaurantImages[id] ||
-          "https://images.unsplash.com/photo-1504674900247-0877df9cc836"
-        }
-      />
+      <img className="res-logo" alt={name} src={CDN_URL + cloudinaryImageId} />
 
       <h3>{name}</h3>
 
