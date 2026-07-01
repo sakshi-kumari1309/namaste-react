@@ -17,13 +17,13 @@ const Body = () => {
 
   const fetchData = async () => {
     const response = await fetch(
-      "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.97530&lng=77.59100&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING",
+      "https://namastedev.com/api/v1/listRestaurants",
     );
 
     const json = await response.json();
 
     const restaurants =
-      json?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle
+      json?.data?.data?.cards?.[1]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants || [];
 
     //* artificial delay so shimmer is visible during development
