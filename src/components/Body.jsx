@@ -1,25 +1,30 @@
-import RestaurantCard from "./RestaurantCard.jsx";
-import { useEffect, useState } from "react";
-import Shimmer from "./Shimmer.jsx";
+import React from "react";
+import RestaurantCard from "./RestaurantCard";
+import Shimmer from "./Shimmer";
+import { RESTAURANT_IMAGES, FALLBACK_IMG } from "../utils/constants";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Body = () => {
+  //* milliseconds to keep the shimmer visible
+  const SIMULATED_DELAY_MS = 1500;
+
+  //* Local State variable to hold the list of restaurants
+  //* Whenever state varibale, react triggers a reconciliation cycle
+  //* (re-render the whole component)
+
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
-
-  //* milliseconds to keep the shimmer visible
-  const SIMULATED_DELAY_MS = 1500;
 
   useEffect(() => {
     fetchData();
   }, []);
 
-
   const fetchData = async () => {
     const response = await fetch(
       "https://namastedev.com/api/v1/listRestaurants",
     );
-
     const json = await response.json();
 
     const restaurants =
@@ -28,70 +33,60 @@ const Body = () => {
 
     //* artificial delay so shimmer is visible during development
     await new Promise((res) => setTimeout(res, SIMULATED_DELAY_MS));
-
     setListOfRestaurants(restaurants);
-    setFilteredRestaurants(restaurants);
   };
 
-  return filteredRestaurants.length === 0 ? (
+  //* Conditional rendering based on the state of listOfRestaurants
+  return listOfRestaurants.length === 0 ? (
     <Shimmer />
   ) : (
     <div className="body">
-      <div className="filter-search-container">
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search for restaurants or dishes"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
         <button
-          className="filter-btn"
           onClick={() => {
-            const filteredList = listOfRestaurants.filter(
-              (item) => item.info.avgRating > 4,
+            //* filter the list of restaurants based on the search text
+            console.log(searchText);
+            const filteredList = listOfRestaurants.filter((res) =>
+              res.info.name.toLowerCase().includes(searchText.toLowerCase()),
             );
             setFilteredRestaurants(filteredList);
           }}
         >
-          ⭐ Top Rated Restaurants
+          Search
         </button>
-
-        <div className="search">
-          <input
-            type="text"
-            placeholder="Search Restaurants..."
-            className="search-input"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-          <button
-            onClick={() => {
-              //* filter the list of restaurants based on the search text
-              console.log(searchText);
-              const filteredList = listOfRestaurants.filter((res) =>
-                res.info.name.toLowerCase().includes(searchText.toLowerCase()),
-              );
-              setFilteredRestaurants(filteredList);
-            }}
-          >
-            Search
-          </button>
-        </div>
       </div>
-
-      <h2
-        style={{
-          marginLeft: "40px",
-          marginBottom: "20px",
+      <div
+        className="filter-btn"
+        onClick={() => {
+          const filteredList = listOfRestaurants.filter(
+            (restaurant) => restaurant.info.avgRating > 4.5,
+          );
+          setFilteredRestaurants(filteredList);
         }}
       >
-        Top Restaurants Near You 🍔
-      </h2>
+        <button>Top Rated Restaurants</button>
+      </div>
 
-      <div className="res-container">
-        {filteredRestaurants.length > 0
-          ? filteredRestaurants.map((restaurant) => (
-              // key must be unique — using the API's own id field
-              <RestaurantCard key={restaurant.info.id} resData={restaurant} />
-            ))
-          : listOfRestaurants.map((restaurant) => (
-              // key must be unique — using the API's own id field
-              <RestaurantCard key={restaurant.info.id} resData={restaurant} />
-            ))}
+      <div className="restaurant-list">
+        {(filteredRestaurants.length > 0
+          ? filteredRestaurants
+          : listOfRestaurants
+        ).map((restaurant) => (
+          // ← Link wraps the card, id goes into the URL
+          <Link
+            key={restaurant.info.id}
+            to={`/restaurant/${restaurant.info.id}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <RestaurantCard resData={restaurant.info} />
+          </Link>
+        ))}
       </div>
     </div>
   );
