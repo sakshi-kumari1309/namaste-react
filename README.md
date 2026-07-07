@@ -159,7 +159,7 @@ Three things happen in sequence:
 
 So, The data layer and UI layer are always kept in sync — this is the core React promise.
 
-----------------------------------------------------------------------------------------
+---
 
 1. if no dependency array => useEffect will be called on every render
 2. if dependency array is empty = [] => useEffect will be called only once after initial render(just once)
@@ -169,3 +169,7 @@ So, The data layer and UI layer are always kept in sync — this is the core Rea
 useEffect(() => {
 console.log("useEffect called");
 }, [btnName]);
+
+2 types of Routing in web apps
+Client Side Routing
+Server Side Routing

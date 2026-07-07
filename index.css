@@ -782,3 +782,14 @@ body {
   color: inherit;
   display: block;
 }
+
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text-secondary);
+  transition: var(--transition);
+}
