@@ -9,20 +9,7 @@ import {
 
 const RestaurantMenu = () => {
   const { resId } = useParams(); // ← reads :resId from the URL
-  const [resInfo, setResInfo] = useState(null);
-
-  useEffect(() => {
-    fetchMenu();
-  }, [resId]); // ← re-fetch if resId changes
-
-  const fetchMenu = async () => {
-    const response = await fetch(
-      `https://namastedev.com/api/v1/listRestaurantMenu/${resId}`,
-    );
-    const json = await response.json();
-    console.log("Menu Data:", json);
-    setResInfo(json.data);
-  };
+  const resInfo = useRestaurantMenu(resId);
 
   if (resInfo === null) return <Shimmer />;
 

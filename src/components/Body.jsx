@@ -4,6 +4,7 @@ import Shimmer from "./Shimmer";
 import { RESTAURANT_IMAGES, FALLBACK_IMG } from "../utils/constants";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
   //* milliseconds to keep the shimmer visible
@@ -35,6 +36,17 @@ const Body = () => {
     await new Promise((res) => setTimeout(res, SIMULATED_DELAY_MS));
     setListOfRestaurants(restaurants);
   };
+
+  const isOnline = useOnlineStatus();
+
+  if (!isOnline) {
+    return (
+      <div className="offline-message">
+        <h2>You are offline</h2>
+        <p>Please check your internet connection</p>
+      </div>
+    );
+  }
 
   //* Conditional rendering based on the state of listOfRestaurants
   return listOfRestaurants.length === 0 ? (
