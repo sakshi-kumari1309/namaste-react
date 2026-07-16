@@ -1,4 +1,6 @@
-const useRestaurantMenu = (resID) => {
+import { useState, useEffect } from "react";
+
+const useRestaurantMenu = (resId) => {
   const [resInfo, setResInfo] = useState(null);
 
   useEffect(() => {
