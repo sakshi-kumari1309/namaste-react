@@ -22,7 +22,7 @@ const About = lazy(() => import("./components/About"));
 
 const AppLayout = () => {
   return (
-    <div className="app">
+    <div className="min-h-screen bg-[#0f1115] text-white">
       <Header />
       <Outlet />
     </div>

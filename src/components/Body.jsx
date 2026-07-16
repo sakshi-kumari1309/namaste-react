@@ -1,18 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
-import { RESTAURANT_IMAGES, FALLBACK_IMG } from "../utils/constants";
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
-  //* milliseconds to keep the shimmer visible
   const SIMULATED_DELAY_MS = 1500;
-
-  //* Local State variable to hold the list of restaurants
-  //* Whenever state varibale, react triggers a reconciliation cycle
-  //* (re-render the whole component)
 
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
   const [searchText, setSearchText] = useState("");
@@ -26,14 +20,15 @@ const Body = () => {
     const response = await fetch(
       "https://namastedev.com/api/v1/listRestaurants",
     );
+
     const json = await response.json();
 
     const restaurants =
       json?.data?.data?.cards?.[1]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants || [];
 
-    //* artificial delay so shimmer is visible during development
     await new Promise((res) => setTimeout(res, SIMULATED_DELAY_MS));
+
     setListOfRestaurants(restaurants);
   };
 
@@ -41,60 +36,70 @@ const Body = () => {
 
   if (!isOnline) {
     return (
-      <div className="offline-message">
-        <h2>You are offline</h2>
-        <p>Please check your internet connection</p>
+      <div className="flex min-h-[70vh] flex-col items-center justify-center px-6 text-center">
+        <h2 className="mb-2 text-3xl font-bold text-red-500">
+          You are offline
+        </h2>
+
+        <p className="text-gray-400">Please check your internet connection.</p>
       </div>
     );
   }
 
-  //* Conditional rendering based on the state of listOfRestaurants
+  const restaurantsToShow =
+    filteredRestaurants.length > 0 ? filteredRestaurants : listOfRestaurants;
+
   return listOfRestaurants.length === 0 ? (
     <Shimmer />
   ) : (
-    <div className="body">
-      <div className="search-container">
+    <div className="p-10">
+      {/* Search */}
+      <div className="mx-auto mb-12 flex max-w-2xl gap-3 max-md:flex-col">
         <input
           type="text"
           placeholder="Search for restaurants or dishes"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
+          className="flex-1 rounded-xl border border-gray-700 bg-[#171a21] px-5 py-3.5 text-white outline-none transition focus:border-amber-400"
         />
+
         <button
+          className="cursor-pointer rounded-xl bg-amber-400 px-6 py-3.5 font-bold text-gray-900 transition hover:bg-amber-500 max-md:w-full"
           onClick={() => {
-            //* filter the list of restaurants based on the search text
-            console.log(searchText);
             const filteredList = listOfRestaurants.filter((res) =>
               res.info.name.toLowerCase().includes(searchText.toLowerCase()),
             );
+
             setFilteredRestaurants(filteredList);
           }}
         >
           Search
         </button>
       </div>
-      <div
-        className="filter-btn"
-        onClick={() => {
-          const filteredList = listOfRestaurants.filter(
-            (restaurant) => restaurant.info.avgRating > 4.5,
-          );
-          setFilteredRestaurants(filteredList);
-        }}
-      >
-        <button>Top Rated Restaurants</button>
+
+      {/* Filter */}
+      <div className="mx-auto mb-6 flex max-w-[1400px]">
+        <button
+          className="cursor-pointer rounded-xl border border-amber-400/30 bg-amber-400/10 px-6 py-3 font-semibold text-amber-400 transition hover:border-amber-400/60 hover:bg-amber-400/20 hover:text-white active:scale-95 max-md:w-full"
+          onClick={() => {
+            const filteredList = listOfRestaurants.filter(
+              (restaurant) => restaurant.info.avgRating > 4.5,
+            );
+
+            setFilteredRestaurants(filteredList);
+          }}
+        >
+          Top Rated Restaurants
+        </button>
       </div>
 
-      <div className="restaurant-list">
-        {(filteredRestaurants.length > 0
-          ? filteredRestaurants
-          : listOfRestaurants
-        ).map((restaurant) => (
-          // ← Link wraps the card, id goes into the URL
+      {/* Restaurant Grid */}
+      <div className="mx-auto grid max-w-[1400px] grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-6 max-md:grid-cols-1">
+        {restaurantsToShow.map((restaurant) => (
           <Link
             key={restaurant.info.id}
             to={`/restaurant/${restaurant.info.id}`}
-            style={{ textDecoration: "none", color: "inherit" }}
+            className="block text-inherit no-underline"
           >
             <RestaurantCard resData={restaurant.info} />
           </Link>

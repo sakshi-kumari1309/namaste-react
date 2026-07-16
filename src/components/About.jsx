@@ -14,12 +14,18 @@ class About extends Component {
 
   render() {
     console.log("Parent render");
+
     return (
-      <div>
-        <h1>About Us</h1>
-        <p>This is the About page.</p>
-        <User name={"Sakshi (function)"} location={"Bangalore"} />
-        <UserClass name={"Sakshi (class)"} location={"Bangalore"} />
+      <div className="mx-auto max-w-5xl px-6 py-10">
+        <h1 className="mb-3 text-4xl font-bold text-white">About Us</h1>
+
+        <p className="mb-8 text-lg text-gray-400">This is the About page.</p>
+
+        <div className="space-y-6">
+          <User name={"Sakshi (function)"} location={"Bangalore"} />
+
+          <UserClass name={"Sakshi (class)"} location={"Bangalore"} />
+        </div>
       </div>
     );
   }
