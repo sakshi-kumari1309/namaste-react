@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext.js";
 
 const Body = () => {
   const SIMULATED_DELAY_MS = 1500;
@@ -15,6 +16,10 @@ const Body = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const { loggedInUser, setUserName } = useContext(UserContext);
+
+  const RestaurantCardWithPromoted = withPromotedLabel(RestaurantCard);
 
   const fetchData = async () => {
     const response = await fetch(
@@ -75,6 +80,12 @@ const Body = () => {
         >
           Search
         </button>
+
+        <input
+        className="flex-1 rounded-xl border border-gray-700 bg-[#171a21] px-5 py-3.5 text-white outline-none transition focus:border-amber-400"
+          value={loggedInUser}
+          onChange={(e) => setUserName(e.target.value)}
+        />
       </div>
 
       {/* Filter */}
@@ -101,7 +112,11 @@ const Body = () => {
             to={`/restaurant/${restaurant.info.id}`}
             className="block text-inherit no-underline"
           >
-            <RestaurantCard resData={restaurant.info} />
+            {restaurant.info.promoted ? (
+              <RestaurantCardWithPromoted resData={restaurant.info} />
+            ) : (
+              <RestaurantCard resData={restaurant.info} />
+            )}
           </Link>
         ))}
       </div>

@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Header = () => {
   const [btnName, setBtnName] = useState("Login");
+  const { loggedInUser } = useContext(UserContext);
 
   return (
     <header className="sticky top-0 z-50 flex h-[72px] items-center justify-between border-b border-gray-700 bg-[#0f1115]/90 px-12 backdrop-blur-md">
@@ -49,6 +51,9 @@ const Header = () => {
           >
             {btnName}
           </button>
+          <li className="rounded-lg px-4 py-2 text-gray-400 transition hover:bg-[#171a21] hover:text-white">
+            {loggedInUser}
+          </li>
         </ul>
       </nav>
     </header>

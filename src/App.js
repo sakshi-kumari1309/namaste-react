@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useContext, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
@@ -9,6 +9,7 @@ import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
 import { Suspense } from "react";
+import UserContext from "./utils/UserContext";
 
 // Chunking
 // Code Splitting
@@ -21,11 +22,21 @@ const Grocery = lazy(() => import("./components/Grocery"));
 const About = lazy(() => import("./components/About"));
 
 const AppLayout = () => {
+  const [userName, setUserName] = useState();
+
+  useEffect(() => {
+    // Simulating an API call to fetch user data
+    const userData = { name: "Sakshi Kumari" }; // Replace with actual API call
+    setUserName(userData.name);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-[#0f1115] text-white">
-      <Header />
-      <Outlet />
-    </div>
+    <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
+      <div className="min-h-screen bg-[#0f1115] text-white">
+        <Header />
+        <Outlet />
+      </div>
+    </UserContext.Provider>
   );
 };
 
